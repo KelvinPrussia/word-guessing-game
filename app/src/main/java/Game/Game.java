@@ -3,32 +3,27 @@ package Game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.Random;
+
 public class Game {
+  Game[] players;
   Integer attemptsRemaining = 10;
   String word;
   ArrayList<Character> guessedLetters = new ArrayList<Character>();
   WordChoser choser = new WordChoser();
+  Masker masker = new Masker();
   public Game(WordChoser choser) {
     word = choser.getRandomWordFromDictionary();
   }
 
-  public String getWordToGuess() {
-    StringBuilder hideWord = new StringBuilder(word);
-    Integer wordLength = word.length();
-    hideWord.delete(1, wordLength);
-    for (int i = 1; i < wordLength; i++){
-      if (guessedLetters.contains(word.charAt(i))){
-        hideWord.append(word.charAt(i));
-      } else {
-        hideWord.append("_");
-      }
-    }
-    String hiddenWord = hideWord.toString();
-      return hiddenWord;
-  }
-
   public Integer getAttemptsRemaining() {
     return attemptsRemaining;
+  }
+
+  public String getWordToGuess(){
+    return masker.getMaskedWord(word, guessedLetters);
   }
 
   public Boolean guessLetter(Character letter){
@@ -47,12 +42,14 @@ public class Game {
     if (attemptsRemaining > 0){
       return false;
     } else {
+      System.out.println("Oh no! You Lost!");
       return true;
     }
   }
 
   public Boolean isGameWon(){
     if (getWordToGuess().equals(word)){
+      System.out.println("Congratulations! You win!");
       return true;
     } else {
       return false;
@@ -61,7 +58,10 @@ public class Game {
 
   public static void main(String[] args){
     WordChoser choser = new WordChoser();
+    WordChoser choser2 = new WordChoser();
     Game game = new Game(choser);
+    Game game2 = new Game(choser2);
+    Game[] players = {game, game2};
     Scanner input = new Scanner(System.in);
     System.out.printf("Welcome! Today the word to guess is:\n");
     do {

@@ -5,33 +5,13 @@ import static org.mockito.Mockito.*;
 import org.junit.Test;
 
 public class GameTest {
-  @Test public void testGetsWordToGuess() {
-    WordChoser mockedChoser = mock(WordChoser.class);
-    when(mockedChoser.getRandomWordFromDictionary()).thenReturn("DEVELOPER");
-
-    Game game = new Game(mockedChoser);
-    assertEquals(game.getWordToGuess(), "D________");
-  }
-
+  
   @Test public void testGetsInitialRemainingAttempts(){
     WordChoser mockedChoser = mock(WordChoser.class);
     when(mockedChoser.getRandomWordFromDictionary()).thenReturn("DEVELOPER");
 
     Game game = new Game(mockedChoser);
     assertEquals(Integer.valueOf(10), game.getAttemptsRemaining());
-  }
-
-  @Test public void testGetsRandomWord(){
-    WordChoser choser = new WordChoser();
-    assertNotNull(choser.getRandomWordFromDictionary());
-  }
-
-  @Test public void testGetsWordToGuessWithRandomWord(){
-    WordChoser mockedChoser = mock(WordChoser.class);
-    when(mockedChoser.getRandomWordFromDictionary()).thenReturn("DEVELOPER");
-
-    Game game = new Game(mockedChoser);
-    assertEquals(game.getWordToGuess(), "D________");
   }
 
   @Test public void testguessLetterCorrect(){
